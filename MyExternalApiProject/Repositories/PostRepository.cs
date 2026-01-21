@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using MyExternalIntegrationApi.Models;
 using System.Net.Http.Json;
 
@@ -5,6 +6,7 @@ namespace MyExternalIntegrationApi.Repositories
 {
     public class PostRepository : IPostRepository
     {
+        public string url = "https://jsonplaceholder.typicode.com/posts";
         private readonly HttpClient _httpClient;
 
         public PostRepository(HttpClient httpClient)
@@ -15,7 +17,7 @@ namespace MyExternalIntegrationApi.Repositories
         public async Task<IEnumerable<Post>> GetExternalPostsAsync()
         {
             // Consumimos el endpoint de posts
-            return await _httpClient.GetFromJsonAsync<IEnumerable<Post>>("https://jsonplaceholder.typicode.com/posts") 
+            return await _httpClient.GetFromJsonAsync<IEnumerable<Post>>(url) 
                    ?? Enumerable.Empty<Post>();
         }
 
@@ -23,7 +25,7 @@ namespace MyExternalIntegrationApi.Repositories
         {
             try 
             {
-                return await _httpClient.GetFromJsonAsync<Post>($"https://jsonplaceholder.typicode.com/posts/{id}");
+                return await _httpClient.GetFromJsonAsync<Post>($"{url}/posts/{id}");
             }
             catch (HttpRequestException)
             {
@@ -34,7 +36,7 @@ namespace MyExternalIntegrationApi.Repositories
 
         public async Task<bool> DeleteExternalUserAsync(int id) // Asegúrate de que el nombre coincida con tu interfaz
         {
-            var response = await _httpClient.DeleteAsync($"https://jsonplaceholder.typicode.com/posts/{id}");
+            var response = await _httpClient.DeleteAsync($"{url}/posts/{id}");
             return response.IsSuccessStatusCode;
         }
 

@@ -1,32 +1,30 @@
 using MyExternalIntegrationApi.Models;
-using System.Net.Http.Json;
+using MyExternalIntegrationApi.Repositories;
 
 namespace MyExternalIntegrationApi.Services
 {
     public class PostService : IPostService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IPostRepository _postRepository;
 
-        public PostService(HttpClient httpClient)
+        public PostService(IPostRepository postRepository)
         {
-            _httpClient = httpClient;
+            _postRepository = postRepository;
         }
 
         public async Task<IEnumerable<Post>> GetAllPostsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<Post>>("https://jsonplaceholder.typicode.com/posts") 
-                   ?? Enumerable.Empty<Post>();
+            return await _postRepository.GetExternalPostsAsync();
         }
 
         public async Task<Post?> GetPostByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Post>($"https://jsonplaceholder.typicode.com/posts/{id}");
+            return await _postRepository.GetExternalPostByIdAsync(id);
         }
 
         public async Task<bool> DeletePostAsync(int id)
         {
-            var response = await _httpClient.DeleteAsync($"https://jsonplaceholder.typicode.com/posts/{id}");
-            return response.IsSuccessStatusCode;
+            return await _postRepository.DeleteExternalPostAsync(id);
         }
     }
 }
