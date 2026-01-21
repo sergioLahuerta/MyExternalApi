@@ -3,22 +3,24 @@ using MyExternalIntegrationApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Controllers
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 1. Registro de Repositorios con HttpClient (Typed Clients)
+// Repositorios con HttpClient
 builder.Services.AddHttpClient<IUserRepository, UserRepository>();
 builder.Services.AddHttpClient<IPostRepository, PostRepository>();
-builder.Services.AddHttpClient<IUserService, UserService>();
-builder.Services.AddHttpClient<IPostService, PostService>();
+
+// Servicios
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Swagger solo en Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -26,9 +28,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
