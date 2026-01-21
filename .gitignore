@@ -1,0 +1,68 @@
+# ==============================
+# .NET / ASP.NET Core
+# ==============================
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+._*
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+*.trx
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+.nuget/packages/
+
+# Publish output
+publish/
+wwwroot/dist/
+
+# ASP.NET Core
+appsettings.Development.json
+appsettings.Local.json
+
+# Secrets
+secrets.json
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+
+# Backup & temp files
+*.bak
+*.tmp
+*.temp
+*.swp
+*~
+
+# JetBrains Rider caches
+.idea/
